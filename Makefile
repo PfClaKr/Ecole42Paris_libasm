@@ -1,6 +1,4 @@
-NAME = libasm
-
-LIB = libasm.a
+NAME = libasm.a
 
 SRCS =  ft_strcpy.s \
 		ft_strdup.s \
@@ -23,18 +21,18 @@ OBJS = $(SRCS:.s=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-		ar rc $(LIB) $(OBJS)
+		ar rc $@ $^
 
 clean :
 		@rm -rf $(OBJS)
 
 fclean : clean
-		@rm -rf $(LIB)
+		@rm -rf $(NAME)
 		@rm -rf test
 
 re : fclean all
 
 test :
-			$(CC) $(CFLAGS) main.c $(LIB) -o test
+			$(CC) $(CFLAGS) main.c $(NAME) -o test
 
 .PHONY : all clean fclean re
