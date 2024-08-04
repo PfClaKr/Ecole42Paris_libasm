@@ -29,4 +29,5 @@ sszie_t	ft_write(int fd, const void *buf, size_t count);
 ***
 
 ## 참조
-[레지스터 메모리](https://www.syncfusion.com/succinctly-free-ebooks/assemblylanguage/memory-spaces)
+[레지스터 메모리](https://www.syncfusion.com/succinctly-free-ebooks/assemblylanguage/memory-spaces) \
+[wrt ..plt nasm 문서](https://www.nasm.us/xdoc/2.11.08/html/nasmdoc7.html#section-7.9.3:~:text=Referring%20to%20a%20procedure,to%20PLT%20entries%20absolutely.)
