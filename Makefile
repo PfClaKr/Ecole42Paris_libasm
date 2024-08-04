@@ -10,10 +10,10 @@ SRCS =  ft_strcpy.s \
 		ft_strcmp.s
 
 NASM = nasm
-NASMFLAGS = -f elf64
+NASMFLAGS = -felf64
 
-CC = gcc
-CFLAGS = -no-pie
+CC = clang
+CFLAGS = 
 
 OBJS = $(SRCS:.s=.o)
 
@@ -23,7 +23,7 @@ OBJS = $(SRCS:.s=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-		ar rcs $(LIB) $(OBJS)
+		ar rc $(LIB) $(OBJS)
 
 clean :
 		@rm -rf $(OBJS)

@@ -1,5 +1,5 @@
-#ifndef LIBASM_H
-# define LIBASM_H
+#ifndef _LIBASM_H
+# define _LIBASM_H
 
 #include <sys/types.h>
 #include <stdlib.h>
