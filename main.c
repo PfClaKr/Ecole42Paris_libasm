@@ -9,14 +9,24 @@ void check_write(void)
 	printf("\nreturn : [%zd]\n", ft_write(1, "Hello World !", 13));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("\nreturn : [%zd]\n\n", write(1, "Hello World !", 13));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("\nreturn : [%zd]\n", ft_write(-7, "libasm is a project that was very interesting to me at the time and I am doing a test of my function with a rather large sentence without any goal, but here I fill as I can thank you for ignoring this sentence, there even punctuation or spelling, this is a crash test", 271));
+	printf("errno : %d\n", errno);
+	errno = 0;
 	printf("\033[36mresultat : libc\033[00m\n");
-	printf("\nreturn : [%zd]\n\n", write(-7, "libasm is a project that was very interesting to me at the time and I am doing a test of my function with a rather large sentence without any goal, but here I fill as I can thank you for ignoring this sentence, there even punctuation or spelling, this is a crash test", 271));
+	printf("\nreturn : [%zd]\n", write(-7, "libasm is a project that was very interesting to me at the time and I am doing a test of my function with a rather large sentence without any goal, but here I fill as I can thank you for ignoring this sentence, there even punctuation or spelling, this is a crash test", 271));
+	printf("errno : %d\n", errno);
+	errno = 0;
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("\nreturn : [%zd]\n", ft_write(1, "", 1));
+	printf("errno : %d\n", errno);
+	errno = 0;
 	printf("\033[36mresultat : libc\033[00m\n");
-	printf("\nreturn : [%zd]\n\n", write(1, "", 1));
+	printf("\nreturn : [%zd]\n", write(1, "", 1));
+	printf("errno : %d\n\n", errno);
+	errno = 0;
 }
 
 void check_read(void)
@@ -24,31 +34,38 @@ void check_read(void)
 	ssize_t ret_read;
 	int fd;
 	char buf[5000];
+	off_t	offset = 0;
 
 	fd = open("ft_write.s", O_RDONLY);
 	printf("============================================\n");
 	printf("================= Ft_read ==================\n");
 	printf("============================================\n\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
-	ret_read = ft_read(0, buf, 42);
+	ret_read = ft_read(fd, buf, 42);
 	buf[ret_read] = '\0';
-	printf("|%s|\nreturn : [%zd]\n", buf, ret_read);
+	printf("%s\nreturn : [%zd]\n", buf, ret_read);
+	lseek(fd, offset, SEEK_SET);
 	printf("\033[36mresultat : libc\033[00m\n");
-	ret_read = read(0, buf, 42);
+	ret_read = read(fd, buf, 42);
 	buf[ret_read] = '\0';
-	printf("|%s|\nreturn : [%zd]\n\n", buf, ret_read);
+	printf("%s\nreturn : [%zd]\n\n", buf, ret_read);
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	ret_read = 0;
 	ret_read = ft_read(-7, buf, 2000);
 	buf[ret_read] = '\0';
 	printf("|%s|\nreturn : [%zd]\n", buf, ret_read);
+	printf("errno : %d\n", errno);
+	errno = 0;
 	close(fd);
 	fd = open("ft_write.s", O_RDONLY);
 	printf("\033[36mresultat : libc\033[00m\n");
 	ret_read = 0;
 	ret_read = read(-7, buf, 2000);
 	buf[ret_read] = '\0';
-	printf("|%s|\nreturn : [%zd]\n\n", buf, ret_read);
+	printf("|%s|\nreturn : [%zd]\n", buf, ret_read);
+	printf("errno : %d\n\n", errno);
+	errno = 0;
 	close(fd);
 }
 
@@ -61,35 +78,16 @@ void check_strlen(void)
 	printf("|%zd|\n", ft_strlen("Hello word"));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("|%zd|\n\n", strlen("Hello word"));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("|%zd|\n", ft_strlen("a"));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("|%zd|\n\n", strlen("a"));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("|%zd|\n", ft_strlen("test"));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("|%zd|\n\n", strlen("test"));
-}
-
-void check_strcmp(void)
-{
-	char strcmp1[] = "";
-	char strcmp2[] = "Hello World !";
-	printf("============================================\n");
-	printf("================ Ft_strcmp =================\n");
-	printf("============================================\n\n");
-	printf("\033[36mresultat : libasm\033[00m\n");
-	printf("return : [%d]\n", ft_strcmp("Hello", "Hello"));
-	printf("\033[36mresultat : libc\033[00m\n");
-	printf("return : [%d]\n\n", strcmp("Hello", "Hello"));
-	printf("\033[36mresultat : libasm\033[00m\n");
-	printf("return : [%d]\n", ft_strcmp("abcd", "abce"));
-	printf("\033[36mresultat : libc\033[00m\n");
-	printf("return : [%d]\n\n", strcmp("abcd", "abce"));
-	printf("\033[36mresultat : libasm\033[00m\n");
-	printf("return : [%d]\n", ft_strcmp(strcmp2, strcmp1));
-	printf("\033[36mresultat : libc\033[00m\n");
-	printf("return : [%d]\n\n", strcmp(strcmp2, strcmp1));
 }
 
 void check_strcpy(void)
@@ -108,23 +106,56 @@ void check_strcpy(void)
 	printf("return : |%s|\n", ft_strcpy(str1, str2));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strcpy(str1, str2));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("return : |%s|\n", ft_strcpy(str3, str4));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strcpy(str3, str4));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("return : |%s|\n", ft_strcpy(str5, str6));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strcpy(str5, str6));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("return : |%s|\n", ft_strcpy(str6, str7));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strcpy(str6, str7));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("return : |%s|\n", ft_strcpy(str7, str6));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strcpy(str7, str6));
 }
+
+void check_strcmp(void)
+{
+	char strcmp1[] = "";
+	char strcmp2[] = "Hello World !";
+	printf("============================================\n");
+	printf("================ Ft_strcmp =================\n");
+	printf("============================================\n\n");
+	printf("\033[36mresultat : libasm\033[00m\n");
+	printf("return : [%d]\n", ft_strcmp("Hello", "Hello"));
+	printf("\033[36mresultat : libc\033[00m\n");
+	printf("return : [%d]\n\n", strcmp("Hello", "Hello"));
+	printf("============================================\n");
+	printf("\033[36mresultat : libasm\033[00m\n");
+	printf("return : [%d]\n", ft_strcmp("abcd", "abce"));
+	printf("\033[36mresultat : libc\033[00m\n");
+	printf("return : [%d]\n\n", strcmp("abcd", "abce"));
+	printf("============================================\n");
+	printf("\033[36mresultat : libasm\033[00m\n");
+	printf("return : [%d]\n", ft_strcmp(strcmp2, strcmp1));
+	printf("\033[36mresultat : libc\033[00m\n");
+	printf("return : [%d]\n\n", strcmp(strcmp2, strcmp1));
+	printf("============================================\n");
+	printf("\033[36mresultat : libasm\033[00m\n");
+	printf("return : [%d]\n", ft_strcmp(strcmp1, strcmp2));
+	printf("\033[36mresultat : libc\033[00m\n");
+	printf("return : [%d]\n\n", strcmp(strcmp1, strcmp2));
+}
+
 
 void check_strdup(void)
 {
@@ -138,10 +169,12 @@ void check_strdup(void)
 	printf("return : |%s|\n", ft_strdup(dup));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strdup(dup));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("return : |%s|\n", ft_strdup(dup1));
 	printf("\033[36mresultat : libc\033[00m\n");
 	printf("return : |%s|\n\n", strdup(dup1));
+	printf("============================================\n");
 	printf("\033[36mresultat : libasm\033[00m\n");
 	printf("return : |%s|\n", ft_strdup(dup2));
 	printf("\033[36mresultat : libc\033[00m\n");
