@@ -33,6 +33,6 @@ fclean : clean
 re : fclean all
 
 test :
-			$(CC) $(CFLAGS) main.c $(NAME) -o test
+			$(CC) $(CFLAGS) -L . main.c -o test -lasm
 
 .PHONY : all clean fclean re
